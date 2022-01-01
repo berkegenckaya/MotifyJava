@@ -9,7 +9,7 @@ public class loginForm extends JFrame implements ActionListener {
     JLabel mailLabel,passwordLabel;
     final JTextField textField1 , textField2;
 
-   loginForm(){
+   public  loginForm(){
        mailLabel = new JLabel();
        mailLabel.setText("E-Mail");
 

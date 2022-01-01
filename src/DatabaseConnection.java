@@ -1,15 +1,12 @@
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DatabaseConnection {
 
-    public static void connect() {
+    public static Connection connect() {
         Connection conn = null;
         try {
 
-            String url = "jdbc:sqlite:identifier.sqlite";
+            String url = "jdbc:sqlite:C:\\Users\\pc\\Desktop\\motifyusers.db";
 
             conn = DriverManager.getConnection(url);
 
@@ -25,35 +22,26 @@ public class DatabaseConnection {
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
+
         }
+        return conn;
+    }
+    public static void insert(String username, String password){
+        String sql = "INSERT INTO users(username,password) VALUES(?,?)";
+
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public static void main(String[] args) {
         connect();
+        insert("admin2","1234");
     }
-
-
-public static class Create {
-
-    public static void createNewDatabase(String fileName) {
-
-        String url = "jdbc:sqlite:identifier.sqlite" + fileName;
-
-        try {
-            Connection conn = DriverManager.getConnection(url);
-            if (conn != null) {
-                DatabaseMetaData meta = conn.getMetaData();
-                System.out.println("The driver name is " + meta.getDriverName());
-                System.out.println("A new database has been created.");
-            }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public static void main(String[] args) {
-        createNewDatabase(".users.db");
-    }
-}
 }

@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class ActivityForm extends  JFrame implements ActionListener {
     JCheckBox checkBox;
-    JPanel panel;
+    JPanel panel,actPanel;
     JLabel activityLabel;
     JButton addActivitybButton;
     ArrayList<Activities> acts = new ArrayList<>();
@@ -32,6 +32,7 @@ public class ActivityForm extends  JFrame implements ActionListener {
     }
     public void addActivity(){
         JButton approveButton = new JButton("Confirm");
+        actPanel = new JPanel(new GridLayout());
         JFrame f= new JFrame("Add Activity");
         JTextField t1;
         DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy");
@@ -45,12 +46,13 @@ public class ActivityForm extends  JFrame implements ActionListener {
         f.add(t1);
         f.add(t2);
         f.add(approveButton);
-        f.setSize(400,400);
-        f.setLayout(null);
+        f.setSize(300,200);
+        f.setLayout(new GridLayout(3,1,10,50));
         f.setVisible(true);
 
         approveButton.addActionListener(e -> {
             Activities act = new Activities(t1.getText(),startdate,false);
+            System.out.println("activity added");
             acts.add(act);
         });
 
