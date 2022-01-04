@@ -1,7 +1,7 @@
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
-class Mail{
+class Email{
     public static void send(String from,String password,String to,String sub,String msg){
         //Get properties object
         Properties props = new Properties();
@@ -32,7 +32,7 @@ class Mail{
     }
     public static void main(String[] args) {
         //from,password,to,subject,message
-        Mail.send("from@gmail.com","xxxxx","to@gmail.com","hello javatpoint","How r u?");
+        Email.send("from@gmail.com","xxxxx","to@gmail.com","hello javatpoint","How r u?");
         //change from, password and to
     }
 }
