@@ -18,9 +18,15 @@ public class RegisterForm {
 
         JTextField textFieldEmail = new JTextField(20);
         textFieldEmail.setBounds(100, 175, 200, 25);
-        String sqlEmail = textFieldEmail.getText();
         jPanel.add(textFieldEmail);
 
+        JLabel usernameLabel = new JLabel("Username");
+        usernameLabel.setBounds(10,135,80,25);
+        jPanel.add(usernameLabel);
+
+        JTextField textFieldUsername = new JTextField(20);
+        textFieldUsername.setBounds(100,135,200,25);
+        jPanel.add(textFieldUsername);
 
         JLabel passwordLabel = new JLabel("Password");
         passwordLabel.setBounds(10, 210, 80, 25);
@@ -50,13 +56,21 @@ public class RegisterForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    String username =textFieldUsername.getText();
                     String email = textFieldEmail.getText();
                     String password = textFieldPassword.getText();
 
-                    if (textFieldEmail.getText().equals("") || textFieldPassword.getText().equals("")){
-                        System.out.println("error");
+                    if (textFieldEmail.getText().equals("") || textFieldPassword.getText().equals("")||
+                            textFieldUsername.getText().equals("") || againPassword.getText().equals(" ")){
+                        JOptionPane.showMessageDialog(frame, "Please enter valid info.!!!",
+                                "ERROR", JOptionPane.ERROR_MESSAGE);
+
                     }else
-                        sqlQuery.insert(email , password);
+                        sqlQuery.insert(username,email , password);
+                    if (!textFieldPassword.getText().equals(againLabel.getText())){
+                        JOptionPane.showMessageDialog(frame, "Passwords doesnt match!",
+                                "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
 
 
                 }catch (Exception ex ){
@@ -77,6 +91,7 @@ public class RegisterForm {
                 try {
                     frame.jFrame.setVisible(false);
                     loginForm loginForm = new loginForm();
+                    loginForm.setVisible(true);
 
                 }catch (Exception ex ){
                     ex.printStackTrace();                   //Catch the appropirate Exception
@@ -88,7 +103,7 @@ public class RegisterForm {
         jPanel.add(loginButton);
     }
 
-    public static class Frame {
+    public static class Frame extends Component {
         JFrame jFrame ;
         public void signUpFrame(){
 
@@ -96,7 +111,7 @@ public class RegisterForm {
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
             jFrame.setLocation((dim.width/2 -jFrame.getSize().width/2), dim.height/4-jFrame.getSize().height/2);
 
-            jFrame.setSize(350 , 500);
+            jFrame.setSize(400 , 500);
             jFrame.setTitle("Motify Register");
 
             jFrame.setResizable(true);

@@ -2,7 +2,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class main {
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws ClassNotFoundException {
+
         RegisterForm registerForm = new RegisterForm();
         registerForm.SignUpPage();
         //loginForm loginForm = new loginForm();

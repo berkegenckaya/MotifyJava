@@ -1,17 +1,20 @@
 import java.sql.*;
 
 public class Queries {
+    String queryUsername;
     String queryEmail ;
     String queryPassword ;
-    String jdbcUrl = ("jdbc:sqlite:C:\\Users\\pc\\Desktop\\motifyusers.db");
+    String jdbcUrl = ("jdbc:sqlite:/C:\\Users\\pc\\Desktop\\database\\motifyjava.db");
 
-    public void insert(String email, String password) {
-        Class.forName("org.sqlite.JDBC");
-        String sql = "INSERT INTO users (email,password) VALUES(?,?)";
+    public void insert(String username ,String email, String password) {
+
+
+        String sql = "INSERT INTO Users (username,email,password) VALUES(?,?,?)";
 
         try (Connection conn = DriverManager.getConnection(jdbcUrl); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, email);
-            pstmt.setString(2, password);
+            pstmt.setString(1,username);
+            pstmt.setString(2, email);
+            pstmt.setString(3, password);
 
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -19,53 +22,33 @@ public class Queries {
         }
     }
 
-    /*public void signUpQuery(){
-
+    public boolean loginQuery(String email ,String password ){
+        boolean isValid = false;
         Connection con = null ;
-        String jdbcUrl = ("jdbc:sqlite:/C:\\Users\\LEGION\\wayto_pay.db");
-        String email = "oztekinberkin5@gmail.com";
-        try {
-            con = DriverManager.getConnection(jdbcUrl);
-            String sql =("INSERT INTO users (name , password , telephone , address , gender) VALUES  + email");
-            Statement statement = con.createStatement();
-            ResultSet result = statement.executeQuery(sql);
-
-            while (result.next()){
-                String name = result.getString("NAME");
-                String password = result.getString("PASSWORD");
-                System.out.println(name +  " | " + password);
-            }
-
-        }catch (Exception ex){
-            System.out.println(ex.getClass().getName() + " : " + ex.getMessage());
-            System.out.println(0);
-        }
-        System.out.println("Database opened successfully");
-    }
-
-     */
-    public void loginQuery(String email , String password){
-
-        Connection con = null ;
-        String sql = "SELECT EMAİL,PASSWORD FROM users WHERE EMAİL = ? AND PASSWORD = ?";
+        String sql = "SELECT * FROM Users WHERE email = ? AND password = ? ";
 
         try (Connection conn = DriverManager.getConnection(jdbcUrl); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, email);
-            pstmt.setString(2, password);
+            pstmt.setString(1,email);
+            pstmt.setString(2,password);
+
 
             ResultSet resultSet = pstmt.executeQuery();
 
             while (resultSet.next()){
-                queryEmail = resultSet.getString("EMAİL");
-                queryPassword= resultSet.getString("PASSWORD");
+                queryEmail = resultSet.getString("email");
+                queryPassword = resultSet.getString("password");
 
-                System.out.println(queryEmail + " | " + queryPassword);
+
+                System.out.println(queryEmail +" "+queryPassword );
+                isValid = true;
             }
 
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return isValid;
     }
+
 
 }
